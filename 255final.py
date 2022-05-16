@@ -77,3 +77,19 @@ lengthafterdropping
 duplicaterows=lengthbeforedropping-lengthafterdropping
 duplicaterows
 
+#Replacing the value -1 with Nan and then deleting those rows
+
+#Finding rows which contain the value -1
+dataset.isin(['-1']).count()
+
+#All the rows have the value -1 in atleast one of the columns, so lets remove the rows which have the maximum number of -1
+
+# Data distribution of the features
+cols={} 
+for i in dataset.columns:
+    print("- - - - - New Column Here- - - - - - - ")
+    x=dataset[i].value_counts(normalize=True)
+    print(x)
+    if dataset[i].isin([-1]).any():
+        cols[i]=x[-1]
+
