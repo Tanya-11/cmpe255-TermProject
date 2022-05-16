@@ -18,7 +18,7 @@ before and after parameter tuning.
 # Introduction
 Phishing is a technique used by phishers to steal the user’s confidential and sensitive data, which could lead to financial loss for any individual or organization. Phishing is a serious security problem in the cyber-world and is an illegal act done by the attackers to steal personal identity data and financial account credentials from web users. Phishing sites lure victims to surf on a fake website and steal their confidential data. Due to this reason, research has been conducted to detect and prevent phishing attacks, where models are constructed for performing classification on phishing websites.
 We will be incorporating classification models, whose input will be URL attributes. This model will be trained with the exhaustive dataset to maximum accuracy. The dataset includes two dataset with 58,645 and 88,647 website’s URL deemed as fraudulent or real. The website is identified by its attributes which are fed to classification models for classification.
-  
+
    
 # Data Description
 The data used has been gathered to develop and analyze different classifiers for detecting phishing websites using URL characteristics, URL resolving metrics and external services. Six groups of 
@@ -45,7 +45,20 @@ real-world situation in which there are more legitimate websites present. We hav
 # Methods
 
 ## Data Preprocessing
+Data Preprocessing is referred to as manipulation or dropping of data before it is used to ensure or enhance performance. It is basically the process of transforming the raw data into understandable format. Data preprocessing is the most important phase of machine learning. It includes removing irrelevant and redundant information from the data. Examples of data preprocessing include cleaning, instance selection, normalization, feature extraction and selection. The product of data preprocessing is the final training set. The dataset that we have selected contained irrelevant and meaningless information which has been removed.
 
+### Plotting count of values per column before dropping duplicate values :
+![image](https://user-images.githubusercontent.com/25512807/168695237-a0fd311a-93f7-4101-9108-67ee5b36ac98.png)
+
+
+### Visualization of Missing Data using missingno lib.
+![image](https://user-images.githubusercontent.com/25512807/168695331-054c4d98-5055-4205-a5d5-09eb48ed0b04.png)
+
+
+### Firstly, we filtered the data by dropping duplicate rows. These values were removed to reduce the dimensionality.
+![image](https://user-images.githubusercontent.com/25512807/168695377-3d86bdaf-9ae0-450f-9e80-f95081d1fc46.png)
+
+Next, we analysed that the dataset contained '-1' values throughout where almost all the rows had this value, so we cannot drop all this data. We then checked the percentage of '-1' values in each column.
 
 
 Visualization-
