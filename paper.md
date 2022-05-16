@@ -58,7 +58,11 @@ Logistic regression is a supervised learning technique. Logistic Regression is u
 
 
 ### Random Forest Classifier
-Random Forest Classifier is used to test and train the data, a supervised machine learning algorithm. The main reason behind picking random forests is to overcome the problem of overfitting. Reducing overfitting is achieved by selecting features randomly compared to decision trees that work only using the rules generated.
+Random Forests is a classification and regression strategy that uses an ensemble approach. During training, the Random Forest classifier creates a number of decision trees and produces a class that is the mode of the classification classes of the individual trees. Because it uses a forest of classification trees to make a judgment, Random Forest classification outperforms all other decision tree methods. We used random forests in our method to increase the overall accuracy of the system because they accept missing values well. Our training dataset contains 58,645 and 88,647 website URLs that were classified as fake or real, respectively.
+
+Consider the following scenario: the input is a PayPal phishing URL. The phishing site's keywords are retrieved and entered the Google search engine. If the top 10 Google results contain the exact page we're looking for, the isomorphic match will be successful, and the suspected URL will be judged real. Assume that the top 10 search results do not contain the page that we are looking for. Isomorphic comparison will fail with all ten outcomes in this situation. We can't just declare the suspicious URL is a phishing one at this point. This can happen if the keyword vector was unable to produce the best potential search results. We use the Random Forest classifier to minimize false positives because the feature vector is reliant on the domain but not on a single page within the domain. Although a PayPal website can have numerous pages, elements such as the domain name, IP address, creation date, Name servers, and so on are consistent across the PayPal domain and do not change from page to page. This gives us the confidence to proceed to the next step, in which the random forest classifier may make a judgment based on the feature vector. This also allows our method to predict the potential phishing target, which in this case is Paypal.com.
+![image](https://user-images.githubusercontent.com/88515630/168694976-1c02730e-83e6-4d19-b794-7f9510571df8.png)
+
 
 ### XGBoost, or Extreme Gradient Boosting
 
