@@ -48,3 +48,15 @@ plt.pie(p,
 plt.axis('equal') 
 plt.show()
 
+from sklearn.feature_selection import VarianceThreshold
+var_thres = VarianceThreshold(threshold=0)
+var_thres.fit(dataset)
+var_thres.get_support()
+constant_columns = [column for column in dataset.columns
+                    if column not in dataset.columns[var_thres.get_support()]]
+print(f"No of columns with 0 variance: {len(constant_columns)}")
+constant_columns
+
+dataset = dataset.drop(constant_columns,axis=1)
+dataset.shape
+
