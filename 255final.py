@@ -60,3 +60,20 @@ constant_columns
 dataset = dataset.drop(constant_columns,axis=1)
 dataset.shape
 
+#length of dataset before dropping duplicate rows
+lengthbeforedropping=len(dataset)
+lengthbeforedropping
+
+# plotting count of values per columns ignoring missing values for dataset
+msno.bar(dataset,color='dodgerblue', sort='ascending',log=True)
+
+#length of dataset after dropping duplicate rows
+
+dataset.drop_duplicates(keep=False,inplace=True)
+lengthafterdropping=len(dataset)
+lengthafterdropping
+
+#Duplicate Rows
+duplicaterows=lengthbeforedropping-lengthafterdropping
+duplicaterows
+
