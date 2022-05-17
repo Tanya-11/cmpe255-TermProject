@@ -520,3 +520,109 @@ print("score",logreg2.score(X_test1,y_test1))
 
 logreg_cv
 
+"""Analysis on KNN Imputed Data"""
+
+df_knn=pd.read_csv("knn_imputed_dataset.csv")
+
+# Heatmap for knn impurted dataset
+plt.figure(figsize=(40,40))
+sns.heatmap(df_knn.corr(),annot=True,linewidths="0.3",cmap="Reds")
+plt.show()
+
+# We don’t want highly correlated features in your dataset because they provide the same information 
+
+correlated_features = set()
+correlation_matrix = df_knn.drop('phishing', axis=1).corr()
+
+for i in range(len(correlation_matrix.columns)):
+    for j in range(i):
+        if abs(correlation_matrix.iloc[i, j]) > 0.8:
+            colname = correlation_matrix.columns[i]
+            correlated_features.add(colname)
+print("most correlated features are :",correlated_features)
+
+X = df_knn.drop('phishing', axis=1)
+y = df_knn['phishing']
+
+from sklearn.model_selection import train_test_split,StratifiedKFold
+
+from sklearn.feature_selection import RFECV
+
+# Provided with a model that has feature coefficients (e.g. regression)or importance factors (e.g. trees), this algorithm starts from all features and greedily eliminates the least important feature. 
+# Once all features are removed, the algorithm returns the subset which gives the best performance.
+rfc = XGBClassifier(random_state=101)
+rfecv = RFECV(estimator=rfc, step=1, cv=StratifiedKFold(n_splits=5, random_state=101, shuffle=True), scoring='accuracy',n_jobs=-1)
+rfecv.fit(X,y)
+
+print('Optimal number of features: {}'.format(rfecv.n_features_))
+
+
+plt.figure(figsize=(16, 9))
+plt.title('Recursive Feature Elimination with Cross-Validation', fontsize=18, fontweight='bold', pad=20)
+plt.xlabel('Number of features selected', fontsize=14, labelpad=20)
+plt.ylabel('% Correct Classification', fontsize=14, labelpad=20)
+plt.plot(range(1, len(rfecv.grid_scores_) + 1), rfecv.grid_scores_, color='#303F9F', linewidth=3)
+
+plt.show()
+
+"""We can observe from the above plot as no of selected features increase our accuracy initially increased and then saturated. After approximately 30 selected features the accuracy is flattened."""
+
+dset = pd.DataFrame()
+dset['attr'] = X.columns[rfecv.support_]
+dset['importance'] = rfecv.estimator_.feature_importances_
+
+dset = dset.sort_values(by='importance', ascending=False)
+
+
+plt.figure(figsize=(16, 14))
+plt.barh(y=dset['attr'], width=dset['importance'], color='#1976D2')
+plt.title('RFECV - Feature Importances', fontsize=20, fontweight='bold', pad=20)
+plt.xlabel('Importance', fontsize=14, labelpad=20)
+plt.show()
+
+# optimal no of features:42 is obtained from RFECV method
+best_features=dset.head(30).attr.tolist()
+print("Top features:",best_features)
+
+best_features=['directory_length', 'qty_slash_url', 'qty_dot_domain', 'time_domain_activation', 'url_shortened', 'length_url', 'qty_hyphen_directory', 'qty_tld_url', 'qty_ip_resolved', 'qty_hyphen_file', 'qty_nameservers', 'qty_dot_url', 'asn_ip', 'qty_at_url', 'qty_hyphen_domain', 'time_response', 'tls_ssl_certificate', 'qty_underline_file', 'qty_comma_file', 'qty_dot_directory', 'qty_redirects', 'qty_mx_servers', 'domain_length', 'qty_equal_url', 'qty_percent_file', 'qty_plus_url', 'ttl_hostname', 'file_length', 'domain_in_ip', 'domain_spf']
+
+#finding no of outliers for the selected best features from RFECV
+def Outliers(numerical_cols,drop=False):
+    for each_feature in numerical_cols:
+        feature_data=df_knn[each_feature]
+        Q1= np.percentile(feature_data,.25)
+        Q3= np.percentile(feature_data,.75)
+        IQR =Q3-Q1 #Interquartile Range
+        outlier_step=IQR * 1.5
+        outliers=feature_data[~((feature_data >= Q1-outlier_step)&(feature_data<=Q3+outlier_step))].index.tolist()
+        print('For the feature {}, No of outliers is {}'.format(each_feature,len(outliers)))
+Outliers(best_features)
+
+def print_metrics(model,y_pred):
+    list = []
+    print("Training accuracy:",accuracy_score(y_train,model.predict(X_train)))
+    print("Test accuracy:",accuracy_score(y_test, y_pred))
+    print("Precision score:",precision_score(y_test, y_pred))
+    print("Recall:",recall_score(y_test, y_pred))
+    print("F1 score:",f1_score(y_test, y_pred))
+    print(classification_report(y_test, y_pred))
+    sns.heatmap(confusion_matrix(y_test,y_pred),annot=True)
+    plt.show()
+
+# train test split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=42,stratify=y)
+
+from sklearn.preprocessing import StandardScaler
+
+#data normalization using StandardScalar
+# standardization can be done only on numerical cols. Applying it on categorical columns gives us undesirable outputs.
+ss = StandardScaler()
+X_train[num_cols] = ss.fit_transform(X_train[num_cols])
+X_test[num_cols] = ss.transform(X_test[num_cols])
+X_train=X_train[best_features]
+X_test=X_test[best_features] 
+print(X_train.shape)
+print(X_test.shape)
+print(y_train.shape)
+print(y_test.shape)
+
