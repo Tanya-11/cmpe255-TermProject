@@ -93,3 +93,22 @@ for i in dataset.columns:
     if dataset[i].isin([-1]).any():
         cols[i]=x[-1]
 
+"""Removing the existing -1's and replacing with NAN in order to replace the values using different imputers."""
+
+for i,j in cols.items():
+    if j>=0.8:
+        dataset.drop(i,inplace=True,axis=1)
+
+df_imp=dataset.replace(to_replace = -1,value =np.nan)
+
+##Visualization of Missing Data using missingno lib.
+
+msno.bar(df_imp,figsize=(20,20))
+
+df_imp
+
+df_imp.isnull().sum()
+
+# visualizing the nullity by column
+msno.bar(df_imp, log = True, color = 'g');
+
