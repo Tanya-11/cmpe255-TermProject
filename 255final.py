@@ -112,3 +112,25 @@ df_imp.isnull().sum()
 # visualizing the nullity by column
 msno.bar(df_imp, log = True, color = 'g');
 
+msno.heatmap(df_imp,  cmap='GnBu_r');
+
+df_imp.isnull().sum()
+
+"""Having a missing value in a machine learning model is considered very inefficient and hazardous because of the following reasons: Reduces the efficiency of the ML model. Affects the overall distribution of data values. It leads to a biased effect in the estimation of the ML model. Therefore, Now We impute the data with different imputation techiniques which we later might use it for model training. The different imputation techniques which we can use are Mean, Mode, Median, KNN Imputation.
+
+Mean Imputation
+"""
+
+from sklearn.impute import SimpleImputer
+imp_mean = SimpleImputer( strategy='mean')
+imp_mean.fit(df_imp)
+mean_imputed_df = imp_mean.transform(df_imp)
+mean_imputed_df = pd.DataFrame(mean_imputed_df,columns = df_imp.columns)
+mean_imputed_df.shape
+
+mean_imputed_df.describe()
+
+mean_imputed_df.isnull().sum()
+
+msno.bar(mean_imputed_df, log = True, color = 'g');
+
