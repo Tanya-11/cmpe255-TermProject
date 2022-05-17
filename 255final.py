@@ -162,3 +162,100 @@ median_imputed_df.isnull().sum()
 
 msno.bar(median_imputed_df, log = True, color = 'g');
 
+"""KNN Imputation"""
+
+# import sklearn.neighbors._base
+# import sys
+
+# sys.modules['sklearn.neighbors.base'] = sklearn.neighbors._base
+
+#using KNN imputer
+from sklearn.impute import KNNImputer
+r=KNNImputer(n_neighbors=7)
+knn_imputed_df=r.fit_transform(df_imp)
+knn_imputed_df=pd.DataFrame(knn_imputed_df,columns=df_imp.columns)
+
+knn_imputed_df
+
+# If any features have low variance, they may not contribute in the model. If any of them exists we try to remove them.
+
+try:
+    from sklearn.feature_selection import VarianceThreshold
+except:
+    pass  # it will catch any exception here
+
+variance_threshold = VarianceThreshold(threshold=0)
+variance_threshold.fit(knn_imputed_df)
+variance_threshold.get_support()
+constant_columns = [column for column in knn_imputed_df.columns
+                    if column not in knn_imputed_df.columns[variance_threshold.get_support()]]
+print(f"No of columns with 0 variance: {len(constant_columns)}")
+print(constant_columns)
+
+knn_imputed_df = knn_imputed_df.drop(constant_columns,axis=1)
+knn_imputed_df.shape
+
+# domain_spf feature values should have range:[0,1] but due to imputation, it got values such as  0.333,0.6666, as it takes an average of nearest neighbors values. 
+# These values are rounded off to the nearest data instance.
+print(knn_imputed_df.domain_spf.value_counts())
+knn_imputed_df.domain_spf=knn_imputed_df.domain_spf.apply(lambda x:np.round(x))
+print(knn_imputed_df.domain_spf.value_counts())
+
+"""Dividing into the numerical columns and categorial columns for better analysis
+
+"""
+
+num_cols=[]
+cat_cols=[]
+for i in knn_imputed_df.columns:
+    if knn_imputed_df[i].nunique()<=2:
+        cat_cols.append(i)
+    else:
+        num_cols.append(i)
+        
+
+cat_cols.remove('qty_at_domain')
+num_cols.append('qty_at_domain')
+
+print("categorical columns: \n",cat_cols)
+print("******************************")
+print("Numerical columns: \n",num_cols)
+
+knn_imputed_df.to_csv("knn_imputed_dataset.csv",index=False)
+
+url_cols=['qty_dot_url', 'qty_hyphen_url', 'qty_underline_url', 'qty_slash_url','qty_questionmark_url', 
+          'qty_equal_url', 'qty_at_url', 'qty_and_url','qty_exclamation_url', 'qty_space_url', 'qty_tilde_url',
+          'qty_comma_url', 'qty_plus_url', 'qty_asterisk_url', 'qty_hashtag_url',
+       'qty_dollar_url', 'qty_percent_url', 'qty_tld_url', 'length_url','email_in_url','phishing']
+
+domain_cols=['qty_dot_domain', 'qty_hyphen_domain', 'qty_underline_domain',
+        'qty_vowels_domain', 'domain_length', 'domain_in_ip','server_client_domain','phishing']
+
+dir_cols=['qty_dot_directory', 'qty_hyphen_directory',
+       'qty_underline_directory', 'qty_slash_directory', 'qty_equal_directory', 'qty_at_directory',
+       'qty_and_directory', 'qty_exclamation_directory', 'qty_space_directory',
+       'qty_tilde_directory', 'qty_comma_directory', 'qty_plus_directory',
+       'qty_asterisk_directory','qty_dollar_directory', 'qty_percent_directory', 'directory_length','phishing']
+
+file_cols=['qty_dot_file', 'qty_hyphen_file', 'qty_underline_file','qty_equal_file',
+       'qty_at_file', 'qty_and_file', 'qty_exclamation_file', 'qty_space_file',
+       'qty_tilde_file', 'qty_comma_file', 'qty_plus_file',
+       'qty_asterisk_file','qty_percent_file', 'file_length','phishing']
+
+external_cols=[ 'time_response','domain_spf', 'asn_ip', 'time_domain_activation',
+       'time_domain_expiration', 'qty_ip_resolved', 'qty_nameservers',
+       'qty_mx_servers', 'ttl_hostname', 'tls_ssl_certificate',
+       'qty_redirects', 'url_google_index', 'domain_google_index',
+       'url_shortened','phishing']
+
+# Plotting all the categorical columns to see how balanced they are
+
+#countplot for categorical values
+plt.figure(figsize=(25,10))
+df_categorical = knn_imputed_df.loc[:,cat_cols]
+sns.countplot(x='variable',hue='value',data= pd.melt(df_categorical))
+plt.title('Countplot for categorical columns')
+plt.show()
+
+df_imp.skew(axis = 0, skipna = True)
+
