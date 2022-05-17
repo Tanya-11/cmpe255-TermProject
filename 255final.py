@@ -502,3 +502,21 @@ scores = cross_val_score(knn, X_mean_imputed, Y_mean_imputed, cv =5)
 
 print('Model accuracy: ',np.mean(scores))
 
+"""The Logistic regression model clearly overfits"""
+
+# Grid search cross validation
+from sklearn.linear_model import LogisticRegression
+grid={"C":np.logspace(-3,3,7), "penalty":["l1","l2"]}# l1 lasso l2 ridge
+logreg=LogisticRegression()
+logreg_cv=GridSearchCV(logreg,grid,cv=10)
+logreg_cv.fit(X_train1,y_train1)
+
+print("tuned hpyerparameters :(best parameters) ",logreg_cv.best_params_)
+print("accuracy :",logreg_cv.best_score_)
+
+logreg2=LogisticRegression(C=1,penalty="l2")
+logreg2.fit(X_train1,y_train1)
+print("score",logreg2.score(X_test1,y_test1))
+
+logreg_cv
+
