@@ -148,3 +148,17 @@ mostFreq_imputed_df.isnull().sum()
 
 msno.bar(mostFreq_imputed_df, log = True, color = 'g');
 
+"""Mode Imputation"""
+
+imp_median = SimpleImputer( strategy='median')
+imp_median.fit(df_imp)
+median_imputed_df = imp_median.transform(df_imp)
+median_imputed_df = pd.DataFrame(median_imputed_df,columns = df_imp.columns)
+median_imputed_df.shape
+
+median_imputed_df.describe()
+
+median_imputed_df.isnull().sum()
+
+msno.bar(median_imputed_df, log = True, color = 'g');
+
