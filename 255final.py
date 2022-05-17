@@ -344,3 +344,97 @@ imp_features_df.head()
 frames = [imp_features_df, Y]
 ref_df = pd.concat(frames,axis = 1)
 
+"""Plotting the Box plot and violin plot to check the outliers
+
+We can clearly infer that ouliers exists.So, we try to remove in the later steps
+"""
+
+import seaborn as sns
+fig, (ax1, ax2, ax3, ax4) = plt.subplots(ncols=4, sharey=True)
+fig.set_size_inches(20,5)
+sns.boxplot(x=imp_features_df['qty_space_directory'],ax=ax1)
+sns.boxplot(x=imp_features_df['qty_at_file'],ax=ax2)
+sns.boxplot(x=imp_features_df['length_url'],ax=ax3)
+sns.boxplot(x=imp_features_df['qty_slash_url'],ax=ax4)
+
+fig, (ax1, ax2, ax3) = plt.subplots(ncols=3, sharey=True)
+fig.set_size_inches(20,5)
+sns.violinplot(x=imp_features_df['time_domain_activation'],ax=ax1)
+sns.violinplot(x=imp_features_df['qty_at_url'],ax=ax2)
+sns.violinplot(x=imp_features_df['qty_dot_domain'],ax=ax3)
+
+for i in ref_df.columns:
+    print(i)
+# ref_df['ttl_hostname']
+
+# We are using the Inter Quartile range to remove all the outliers for important features 
+X_temp = imp_features_df.drop({'qty_slash_url','length_url'},axis=1)
+imp_temp = imp_features_df[{'qty_slash_url','length_url'}]
+for i in X_temp.columns:
+    a = X_temp[i]
+    Q1=a.quantile(0.25)
+    Q3=a.quantile(0.75)
+    IQR=Q3-Q1
+    lowqe_bound=Q1 - 1.5 * IQR
+    upper_bound=Q3 + 1.5 * IQR
+    percentile25 = X_temp[i].quantile(0.25)
+    percentile75 = X_temp[i].quantile(0.75)
+    iqr = percentile75-percentile25
+    upper_limit = percentile75 + 1.5 * iqr
+    lower_limit = percentile25 - 1.5 * iqr
+
+    X_temp[X_temp[i] > upper_limit]
+    X_temp[X_temp[i] < lower_limit]
+
+    X_temp = X_temp[X_temp[i] < upper_limit]
+
+frames = [X_temp, imp_temp]
+imp_features_df = pd.concat(frames,axis = 1)
+
+"""Below we can clearly see that the outliers has been removed
+
+"""
+
+import warnings
+warnings.filterwarnings('ignore')
+
+plt.figure(figsize=(16,8))
+plt.subplot(2,2,1)
+sns.distplot(imp_features_df['length_url'])
+plt.subplot(2,2,2)
+sns.boxplot(imp_features_df['length_url'])
+plt.show()
+
+"""Now we will find the correlation between all the features and the target feature.
+
+"""
+
+ref_df.corr()
+
+"""Time Domain Activation has negative correlation with Phishing feature
+
+Qty Slash Url relatively has a positive correlation with Phishing feature
+"""
+
+fig = plt.figure(figsize=(8, 6))
+fig.set_size_inches(10,10)
+sns.heatmap(ref_df.corr())
+
+"""We can clearly infer that if the Domain Activation time is between 3000 to 4000 days, there is high probability of the website being a phishing website."""
+
+colors = ["#1B1AD0","#C52244"]
+plt.figure(figsize=(7,7))
+sns.histplot(data=ref_df, x="time_domain_activation", hue = "phishing",binwidth=10, kde=True, palette=sns.color_palette(colors))
+plt.ylim(0,300)
+plt.xlim(0, 10000)
+plt.xlabel('time domain activation(in days)', fontsize = 20)
+plt.ylabel('Count', fontsize = 20)
+plt.show()
+
+plt.figure(figsize=(16,8))
+plt.subplot(2,2,1)
+sns.distplot(ref_df['time_domain_activation'])
+plt.subplot(2,2,2)
+sns.boxplot(ref_df['time_domain_activation'])
+plt.show()
+
