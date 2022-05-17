@@ -134,3 +134,17 @@ mean_imputed_df.isnull().sum()
 
 msno.bar(mean_imputed_df, log = True, color = 'g');
 
+"""Mode Imputation"""
+
+imp_mode = SimpleImputer( strategy='most_frequent')
+imp_mode.fit(df_imp)
+mostFreq_imputed_df = imp_mode.transform(df_imp)
+mostFreq_imputed_df = pd.DataFrame(mostFreq_imputed_df,columns = df_imp.columns)
+mostFreq_imputed_df.shape
+
+mostFreq_imputed_df.describe()
+
+mostFreq_imputed_df.isnull().sum()
+
+msno.bar(mostFreq_imputed_df, log = True, color = 'g');
+
