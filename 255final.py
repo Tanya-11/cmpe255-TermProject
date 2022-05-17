@@ -148,7 +148,7 @@ mostFreq_imputed_df.isnull().sum()
 
 msno.bar(mostFreq_imputed_df, log = True, color = 'g');
 
-"""Mode Imputation"""
+"""Median Imputation"""
 
 imp_median = SimpleImputer( strategy='median')
 imp_median.fit(df_imp)
@@ -437,4 +437,68 @@ sns.distplot(ref_df['time_domain_activation'])
 plt.subplot(2,2,2)
 sns.boxplot(ref_df['time_domain_activation'])
 plt.show()
+
+from sklearn.neighbors import KNeighborsClassifier
+knn = KNeighborsClassifier()
+X_mean_imputed = ref_df
+Y_mean_imputed = ref_df['phishing']
+
+X_train1, X_test1, y_train1, y_test1 = train_test_split(X_mean_imputed, Y_mean_imputed, test_size=0.3, random_state=0)
+
+from sklearn import metrics
+mean_acc = np.zeros(20)
+for i in range(1,21):
+    #Train Model and Predict  
+    knn = KNeighborsClassifier(n_neighbors = i).fit(X_train1,y_train1)
+    yhat= knn.predict(X_test1)
+    mean_acc[i-1] = metrics.accuracy_score(y_test1, yhat)
+
+mean_acc
+
+loc = np.arange(1,21,step=1.0)
+plt.figure(figsize = (10, 6))
+plt.plot(range(1,21), mean_acc)
+plt.xticks(loc)
+plt.xlabel('Number of Neighbors ')
+plt.ylabel('Accuracy')
+plt.show()
+
+"""We can notice that as the neighbors increases, the accuracy decreases."""
+
+# Training the mean imputed data with KNN-Classifier
+knn = KNeighborsClassifier(n_neighbors = 5, weights = 'distance',algorithm = 'brute',metric = 'manhattan')
+knn.fit(X_train1, y_train1)
+
+from sklearn.model_selection import GridSearchCV
+grid_params = { 'n_neighbors' : [1,3,5,7,9],
+               'weights' : ['uniform','distance'],
+               'metric' : ['minkowski','euclidean','manhattan']}
+gs = GridSearchCV(KNeighborsClassifier(), grid_params, verbose = 1, cv=3, n_jobs = -1)
+
+# next we need to fit the model on our trained set
+g_res = gs.fit(X_train1, y_train1)
+
+# find the best score
+g_res.best_score_
+
+# get the hyperparameters with the best score
+g_res.best_params_
+
+knn = KNeighborsClassifier(n_neighbors = 5, weights = 'distance',algorithm = 'brute',metric = 'manhattan')
+knn.fit(X_train, y_train)
+
+## We calculate the accuracy
+# get a prediction
+y_hat = knn.predict(X_train)
+y_knn = knn.predict(X_test)
+print('Training set accuracy: ', metrics.accuracy_score(y_train, y_hat))
+print('Test set accuracy: ',metrics.accuracy_score(y_test, y_knn))
+
+from sklearn.metrics import classification_report
+print(classification_report(y_test, y_knn))
+
+from sklearn.model_selection import cross_val_score
+scores = cross_val_score(knn, X_mean_imputed, Y_mean_imputed, cv =5)
+
+print('Model accuracy: ',np.mean(scores))
 
