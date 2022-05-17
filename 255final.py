@@ -259,3 +259,88 @@ plt.show()
 
 df_imp.skew(axis = 0, skipna = True)
 
+###Analyzing the data now
+##i) First on mean imputed data
+##ii)then on KNN Imputed Data
+
+# I) Analysis on Mean Imputed data
+
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.model_selection import train_test_split,cross_val_score
+
+X = mean_imputed_df.drop( columns='phishing')
+Y = mean_imputed_df['phishing']
+
+# Spliting the data into training(70%) and test sets(30%)
+
+X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size=0.3, random_state=0)
+
+# Using XGBoost Model on Median imputed data training for feature importance
+
+from xgboost import XGBClassifier
+
+xgb = XGBClassifier()
+
+# Tuning
+
+from sklearn.model_selection import RandomizedSearchCV
+
+
+param = {
+    # Parameters that will be used
+    'max_depth':[int(x) for x in np.linspace(start=5, stop=20, num=1)],
+    'min_child_weight':[int(x) for x in np.linspace(start=1, stop=10, num=1)],
+    'eta':[0.3, 0.2, 0.1, 0.05, 0.01, 0.005],
+    'subsample': [x/10 for x in np.linspace(start=1, stop=10, num=1)],
+    'colsample_bytree': [x/10 for x in np.linspace(start=1, stop=10, num=1)],
+    'n_estimators': [int(x) for x in np.linspace(start=50, stop=500, num=50)]
+}
+
+xgb_random_search_CV = RandomizedSearchCV(estimator=xgb,
+                                      param_distributions = param,
+                                      n_iter = 100,
+                                      cv=3,
+                                      verbose=2,
+                                      random_state=47,
+                                      n_jobs=2)
+
+xgb_random_search_CV.fit(X_train, y_train)
+print(xgb_random_search_CV.best_params_)
+
+"""Moving on to feature selection and training the model"""
+
+xgb = XGBClassifier(subsample = 0.1, n_estimators = 481, min_child_weight = 1,  max_depth = 5,  eta = 0.3, colsample_bytree = 0.1)
+xgb.fit(X, Y)
+
+import seaborn as sns
+feats = {}
+for feature, importance in zip(X.columns, xgb.feature_importances_):
+    feats[feature] = importance
+importances = pd.DataFrame.from_dict(feats, orient='index').rename(columns={0: 'Importance'})
+importances = importances.sort_values(by='Importance', ascending=False).nlargest(30, 'Importance')
+importances = importances.reset_index()
+importances = importances.rename(columns={'index': 'Features'})
+sns.set(font_scale = 5)
+sns.set(style="whitegrid", color_codes=True, font_scale = 1.7)
+fig, ax = plt.subplots()
+fig.set_size_inches(10,10)
+sns.barplot(x=importances['Importance'], y=importances['Features'], data=importances, color='skyblue')
+plt.xlabel('Importance', fontsize=25, weight = 'bold')
+plt.ylabel('Features', fontsize=25, weight = 'bold')
+plt.title('Feature Importance', fontsize=25, weight = 'bold')
+display(plt.show())
+
+display(importances)
+
+"""Picking Only the Important Features that contribute to getting the result"""
+
+imp_features_df = X[['qty_space_directory','qty_at_file','qty_asterisk_file','qty_slash_url','qty_exclamation_directory',
+                     'qty_dot_domain','domain_google_index','qty_dot_directory','length_url',
+                     'qty_percent_file','time_domain_activation','qty_at_url','qty_ip_resolved','qty_exclamation_file'
+                     ,'url_shortened']]
+
+imp_features_df.head()
+
+frames = [imp_features_df, Y]
+ref_df = pd.concat(frames,axis = 1)
+
