@@ -171,3 +171,14 @@ We modeled and analyzed data with 2 imputation methods for which we observed dif
 Here, after all the analysis we can conclude that the best accuracy of 94.72% for KNN imputed data was achieved using RandomForestClassifier. The best accuracy for mean imputed data was provided using KNNClassifier which produced an accuracy of 95.34%. 
 
 According to feature importance graphs we can conclude the most relevant features correspond to attributes depending on URL and external services, according to both KNN imputed data analysis and mean imputed data analysis.
+
+## References
+6.4. imputation of missing values. scikit. (n.d.). Retrieved May 22, 2022, from https://scikit-learn.org/stable/modules/impute.html 
+Brownlee, J. (2019, August 22). A gentle introduction to data visualization methods in Python. Machine Learning Mastery. Retrieved May 22, 2022, from https://machinelearningmastery.com/data-visualization-methods-in-python/ 
+Brownlee, J. (2020, August 20). How to calculate feature importance with python. Machine Learning Mastery. Retrieved May 22, 2022, from https://machinelearningmastery.com/calculate-feature-importance-with-python/ 
+Explore scientific, technical, and medical research on ScienceDirect. ScienceDirect.com | Science, health and medical journals, full text articles and books. (n.d.). Retrieved May 22, 2022, from https://www.sciencedirect.com/ 
+Interquartile range and quartile deviation using NumPy and SciPy. GeeksforGeeks. (2020, June 7). Retrieved May 22, 2022, from https://www.geeksforgeeks.org/interquartile-range-and-quartile-deviation-using-numpy-and-scipy/ 
+Lewinson, E. (2021, August 26). Explaining feature importance by example of a random forest. Medium. Retrieved May 22, 2022, from https://towardsdatascience.com/explaining-feature-importance-by-example-of-a-random-forest-d9166011959e 
+McKenzie, C., Morrow, S., Belding, G., Mallory, P., Messina, G., Tavares, P., &amp; Antipov, A. (2022, March 20). Phishing archives. Infosec Resources. Retrieved May 22, 2022, from https://resources.infosecinstitute.com/topics/phishing/#gref 
+Phishing detection using machine learning techniques - arxiv.org. (n.d.). Retrieved May 23, 2022, from https://arxiv.org/pdf/2009.11116.pdf 
+Vrbančič, G. (2020, September 24). Phishing websites dataset. Mendeley Data. Retrieved May 22, 2022, from https://data.mendeley.com/datasets/72ptz43s9v/1 
