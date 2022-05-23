@@ -72,11 +72,16 @@ In addition to this, the missing values are also imputed using median and mode. 
 
 ## Methods Followed
 Data Preprocessing is referred to as manipulation or dropping of data before it is used to ensure or enhance performance. It is basically the process of transforming the raw data into understandable format. It includes removing irrelevant and redundant information from the data.The product of data preprocessing is the final training set. The dataset that we have selected contained irrelevant and meaningless information which has been removed.
-Firstly, we filtered the data by dropping duplicate rows. We dropped 1653 rows in the dataset. These values were removed to reduce the dimensionality.  
+Firstly, we filtered the data by dropping duplicate rows. We dropped 1653 rows in the dataset. These values were removed to reduce the dimensionality.
+
+
+Figure 3: Removing Duplicate Rows
 
 Next, we analyzed that the dataset contained '-1' values throughout where almost all the rows had this value, so we cannot drop all this data. We then checked the percentage of '-1' values in each column.As per the previous analysis, we have noticed that almost 80% of the dataset contains ‘-1’. Since most of the columns have ‘-1’, it would not be wise to remove them altogether as they may significantly affect the result. To tackle this, we remove the columns with less than 80% ‘-1’ and replace them with Nan. To improve the efficiency while testing and training, we drop the rest of the columns.
 We then visualized the missing data in the dataframe using the missing number library. The figure below shows the visualization of missing data after imputing Nan and it can be noted that a lot of params are missing.
 
+Figure 4 : Visualization of Missing Data
+ 
 Once we have dropped values containing ‘-1’, the next step is to look at the missing values. There are three main reasons why values could be missing – Missing at random, Missing Completely at random, Not Missing at random. The initial approach initiated for imputing it using mean imputation. As the name suggests, the mean is calculated for the available values and replaced with the non-missing value’s number. An essential step to bear in mind during mean imputation is to remove outliers to prevent seeing absurd or surprising values as mean.
 In addition to this, the missing values are also imputed using median and mode. These methods do not necessarily worry about outliers as they work using the middle values that are present when the column values are sorted. The last imputation method used is the most effective in predicting the missing values. It uses the Nearest Neighbor method known as KNN imputation, where the Nan values are replaced with the values of the neighboring values.
 
@@ -86,6 +91,8 @@ We used the SimpleImputer class to accomplish this. SimpleImputer is a scikit-le
 The mean of the corresponding column is used to replace all missing data.
 The data is then shown to see if there are any Null values. It is clear from the Bar Plot below that there are no more Null values.
 
+
+
 ### B.KNN Imputed Data Analysis
 The Nan values or the null data is imputed using KNN imputer with nearest neighbor - 7 and the distance measure used is euclidean distance. 
 The stratified split size of test data to train data is 25%.
@@ -93,6 +100,9 @@ Data is standardized using StandardScalar() function.
 We have used 2 classifiers for analyzing the data : Logistic Regression and Random Forest Classifier.
 We divided the data into categorical and numerical columns for better analysis.
 Below is the visualization of  categorical in knn imputed data.
+
+
+Figure 5 : Visualization of categorical data in knn imputed data
 
 ## Modeling Comparisons
 The accuracy is obtained using various models. The first two models were trained on Mean imputed data while the other models were trained on KNN imputed data. The following are the models:\
@@ -115,4 +125,5 @@ It is used in statistical software to understand the relationship between the de
 ### Random Forest Classifier:
 When a large number of decision tree operate as an ensemble, they make up Random Forest. Each tree in the random forest produces a class prediction, and the class with the most votes becomes the prediction of our model. The accuracy found through Random Forest is 95.63 percent via KNN imputation. The Performance metrics of Random Forest Classifier can be seen in the figure below- \
 ![image](https://user-images.githubusercontent.com/90728105/169725726-2876dff8-3258-489d-b5bb-d6ce9e899b71.png)
+
 
