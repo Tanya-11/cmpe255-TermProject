@@ -158,37 +158,36 @@ We’ve made sure to optimize the hyperparameters of the models used to use the 
 #### Figure 9: Feature Selection and Importance of KNN Imputed Data 
 
 ## Modeling Comparisons
-The accuracy is obtained using various models. The first two models were trained on Mean imputed data while the other models were trained on KNN imputed data. The following are the models:
+The accuracy is obtained using various models based on F1 scores bacause we aim to find accuaracy for which true predictions were correct and it generates a single score that accounts for both precision and recall concerns in a single number. The first two models were trained on Mean imputed data while the other models were trained on KNN imputed data. The following are the models:
 
 ### Logistic Regression:
-It is used in statistical software to understand the relationship between the dependent variable and one or more independent variables by estimating probabilities using a logistic regression equation. The accuracy found through Logistic Regression is 99.99 percent via Mean imputed data. Hence, it can be understood that this model is overfitting.
+Despite doing feature extraction, Hypertuning parameters and regularization, this classifier achieved accuracy found of 99.99 percent via Mean imputed data. Hence, it can be understood that this model obviously overfitting. We predict that it could be some of the features are highly correlated due to mean imputation, as mean imputation can give unpreictable outliers.
 
 ### KNN Classifier:
-The k-nearest neighbors (KNN) algorithm is a simple, supervised machine learning algorithm that can be used to solve both classification and regression problems. The accuracy found in the KNeighbour classifier is 95.34 percent via Mean imputed data. Below, the figure shows us the accuracy of the KNN Classifier model. \
+The k-nearest neighbors (KNN) algorithm is a simple, supervised machine learning algorithm that can be used to solve both classification and regression problems. The accuracy found in the KNeighbour classifier is 95.34 percent via Mean imputed data. Below, the figure shows us the accuracy of the KNN Classifier model. We can see in the confusion matrix that the number of False Negatives and False Positives is less than True Positives and True Negatives, which is a good sign. \
 ![image](https://user-images.githubusercontent.com/90728105/169725911-df1bcd4c-9789-429c-8d2b-3de7ce23928d.png)
 #### Figure 10: Accuracy of the KNN Classifier model  
 
 ### XGBoost Classifier:
-XGBoost is an algorithm that has recently been dominating applied machine learning and Kaggle competitions for structured or tabular data. XGBoost is an implementation of gradient boosted decision trees designed for speed and performance. The accuracy found through XGB CLassifier is 92.77 percent via KNN imputation. The performance metrics of XGBoost Classifier can be seen in the figure below- \
+XGBoost is an algorithm that has recently been dominating applied machine learning and Kaggle competitions for structured or tabular data. XGBoost is an implementation of gradient boosted decision trees designed for speed and performance. We can see in the confusion matrix that the number of False Negatives and False Positives is less than True Positives and True Negatives, which is a good sign. The accuracy found through XGB CLassifier is 92 percent via KNN imputation. The performance metrics of XGBoost Classifier can be seen in the figure below- \
 ![image](https://user-images.githubusercontent.com/90728105/169725626-91195074-df1f-4746-9202-77c6caf3c950.png)
 #### Figure 11: Performance Metrics of the KNN Classifier model 
 
 ### Logistic Regression:
-It is used in statistical software to understand the relationship between the dependent variable and one or more independent variables by estimating probabilities using a logistic regression equation. The accuracy found through Logistic Regression is 89.07 percent via KNN imputation. Performance metrics of Logistic Regression can be seen in the figure below- \
+This time we dopped highly correlated features and then feature extraction to avoid overfitting in KNN imputation.The accuracy found through Logistic Regression is 89.07 percent via KNN imputation. Below, the figure shows us the accuracy of the KNN Classifier model. We can see in the confusion matrix that the number of False Negatives and False Positives is less than True Positives and True Negatives, which is a good sign. Performance metrics of Logistic Regression can be seen in the figure below- \
 ![image](https://user-images.githubusercontent.com/90728105/169725560-b18fe537-561b-4bd7-b9fc-c586ca641c45.png)
 #### Figure 12: Performance Metrics of the Logistic Regression 
 
 ### Random Forest Classifier:
-When a large number of decision tree operate as an ensemble, they make up Random Forest. Each tree in the random forest produces a class prediction, and the class with the most votes becomes the prediction of our model. The accuracy found through Random Forest is 95.63 percent via KNN imputation. The Performance metrics of Random Forest Classifier can be seen in the figure below- \
+When a large number of decision tree operate as an ensemble, they make up Random Forest. Each tree in the random forest produces a class prediction, and the class with the most votes becomes the prediction of our model. The accuracy found through Random Forest is 95 percent via KNN imputation. Below, the figure shows us the accuracy of the KNN Classifier model. We can see in the confusion matrix that the number of False Negatives and False Positives is less than True Positives and True Negatives, which is a good sign. The Performance metrics of Random Forest Classifier can be seen in the figure below- \
 ![image](https://user-images.githubusercontent.com/90728105/169725726-2876dff8-3258-489d-b5bb-d6ce9e899b71.png)
 #### Figure 13: Performance Metrics of the Random Forest Classifier 
 
 ## Comparisons
-We modeled and analyzed data with 2 imputation methods for which we observed different results. Logistic Regression was applied to both the types of data but it produced an accuracy of 88% on Knn imputed data whereas for mean imputed data it produced a 95% accuracy. Logistic Regression for mean imputed data was clearly overfitting.  Models applied to the 2 types of imputed data provided highest accuracy rates of 94%.
+We modeled and analyzed data with 2 imputation methods for which we observed different results because we wanted to demonstrate the difference between Mean ans KNN imputed data analysis and show when the similarity/co-relation among the attributes is considered, unlike Mean imputation. Logistic Regression was applied to both the types of data but it produced an accuracy of 88% on KNN imputed data whereas for mean imputed data, despite regularization and feature extraction it was overfitting.   Models applied to the 2 types of imputed data provided highest accuracy rates of 94%.
 
 ## Conclusion
-Here, after all the analysis we can conclude that the best accuracy of 94.63% for KNN imputed data was achieved using RandomForestClassifier. The best accuracy for mean imputed data was provided using KNNClassifier which produced an accuracy of 95.34%. 
-
+Here, after all the analysis we can conclude that the best accuracy of 94.63% for KNN imputed data was achieved using RandomForestClassifier. The best accuracy for mean imputed data was provided using KNNClassifier which produced an accuracy of 95.34%. And imputation techniques like KNN are better than mean as former preserves corelation among features, whereas latter it may look like there is a stronger relationship than there really is, which isn't good option.
 According to feature importance graphs we can conclude the most relevant features correspond to attributes depending on URL and external services, according to both KNN imputed data analysis and mean imputed data analysis.
 
 ## References
