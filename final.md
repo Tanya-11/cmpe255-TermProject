@@ -82,7 +82,7 @@ Next, we analyzed that the dataset contained '-1' values throughout where almost
 We then visualized the missing data in the dataframe using the missing number library. The figure below shows the visualization of missing data after imputing Nan and it can be noted that a lot of params are missing.\
 
 <img width="534" alt="Screen Shot 2022-05-22 at 7 08 35 PM" src="https://user-images.githubusercontent.com/25512807/169730384-edf5a130-e339-4773-b384-309cc6391737.png">
-#### Figure 4: Visualization of Missing Data
+#### Figure 4: Visualization of Missing Data using missingo library [10]
 
  
 Once we have dropped values containing ‘-1’, the next step is to look at the missing values. There are three main reasons why values could be missing – Missing at random, Missing Completely at random, Not Missing at random. The initial approach initiated for imputing it using mean imputation. As the name suggests, the mean is calculated for the available values and replaced with the non-missing value’s number. An essential step to bear in mind during mean imputation is to remove outliers to prevent seeing absurd or surprising values as mean.
@@ -185,16 +185,14 @@ According to feature importance graphs we can conclude the most relevant feature
 
 [3] Brownlee, J. (2020, August 20). How to calculate feature importance with python. Machine Learning Mastery. Retrieved May 22, 2022, from                                 https://machinelearningmastery.com/calculate-feature-importance-with-python/ 
 
-[4] Explore scientific, technical, and medical research on ScienceDirect. ScienceDirect.com | Science, health and medical journals, full text articles and books.           (n.d.). Retrieved May 22, 2022, from https://www.sciencedirect.com/ 
+[4] Interquartile range and quartile deviation using NumPy and SciPy. GeeksforGeeks. (2020, June 7). Retrieved May 22, 2022, from                                           https://www.geeksforgeeks.org/interquartile-range-and-quartile-deviation-using-numpy-and-scipy/ 
 
-[5] Interquartile range and quartile deviation using NumPy and SciPy. GeeksforGeeks. (2020, June 7). Retrieved May 22, 2022, from                                           https://www.geeksforgeeks.org/interquartile-range-and-quartile-deviation-using-numpy-and-scipy/ 
+[5] Lewinson, E. (2021, August 26). Explaining feature importance by example of a random forest. Medium. Retrieved May 22, 2022, from                                       https://towardsdatascience.com/explaining-feature-importance-by-example-of-a-random-forest-d9166011959e 
 
-[6] Lewinson, E. (2021, August 26). Explaining feature importance by example of a random forest. Medium. Retrieved May 22, 2022, from                                       https://towardsdatascience.com/explaining-feature-importance-by-example-of-a-random-forest-d9166011959e 
+[6] McKenzie, C., Morrow, S., Belding, G., Mallory, P., Messina, G., Tavares, P., &amp; Antipov, A. (2022, March 20). Phishing archives. Infosec Resources.                 Retrieved May 22, 2022, from https://resources.infosecinstitute.com/topics/phishing/#gref 
 
-[7] McKenzie, C., Morrow, S., Belding, G., Mallory, P., Messina, G., Tavares, P., &amp; Antipov, A. (2022, March 20). Phishing archives. Infosec Resources.                 Retrieved May 22, 2022, from https://resources.infosecinstitute.com/topics/phishing/#gref 
+[7] Phishing detection using machine learning techniques - arxiv.org. (n.d.). Retrieved May 23, 2022, from https://arxiv.org/pdf/2009.11116.pdf 
 
-[8] Phishing detection using machine learning techniques - arxiv.org. (n.d.). Retrieved May 23, 2022, from https://arxiv.org/pdf/2009.11116.pdf 
+[8] Vrbančič, G. (2020, September 24). Phishing websites dataset. Mendeley Data. Retrieved May 22, 2022, from https://data.mendeley.com/datasets/72ptz43s9v/1 
 
-[9] Vrbančič, G. (2020, September 24). Phishing websites dataset. Mendeley Data. Retrieved May 22, 2022, from https://data.mendeley.com/datasets/72ptz43s9v/1 
-
-[10] ResidentMario. (n.d.). Residentmario/Missingno: Missing data visualization module for python. GitHub. Retrieved May 22, 2022, from                                      https://github.com/ResidentMario/missingno 
+[9] ResidentMario. (n.d.). Residentmario/Missingno: Missing data visualization module for python. GitHub. Retrieved May 22, 2022, from                                      https://github.com/ResidentMario/missingno 
