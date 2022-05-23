@@ -167,3 +167,7 @@ When a large number of decision tree operate as an ensemble, they make up Random
 ## Comparisons
 We modeled and analyzed data with 2 imputation methods for which we observed different results. Logistic Regression was applied to both the types of data but it produced an accuracy of 88% on Knn imputed data whereas for mean imputed data it produced a 95% accuracy. Logistic Regression for mean imputed data was clearly overfitting.  Models applied to the 2 types of imputed data provided highest accuracy rates of 94%.
 
+## Conclusion
+Here, after all the analysis we can conclude that the best accuracy of 94.72% for KNN imputed data was achieved using RandomForestClassifier. The best accuracy for mean imputed data was provided using KNNClassifier which produced an accuracy of 95.34%. 
+
+According to feature importance graphs we can conclude the most relevant features correspond to attributes depending on URL and external services, according to both KNN imputed data analysis and mean imputed data analysis.
