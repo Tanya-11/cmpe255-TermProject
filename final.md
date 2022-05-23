@@ -30,10 +30,10 @@ attributes can be found in the prepared dataset:\
   • Item attributes based on the URL parameter properties.\
   • Item attributes based on the URL resolving data and external metrics.
   
- As evident from picture below, the first group is based on the values of the characteristics on the entire URL string, but the values of the next four groups are based on sub-strings. The
-last set of attributes is based on URL's resolve metrics as well as external services like Google's search index.
+ As evident from picture below, the first group is based on the values of the characteristics on the entire URL string, but the values of the next four groups are based on sub-strings. The last set of attributes is based on URL's resolve metrics as well as external services like Google's search index.
 
 ![image](https://user-images.githubusercontent.com/90728105/167979436-fcd7ba8f-8a1d-4a4f-9162-90fcc1443008.png)
+#### Figure 1: URL attaributes 
 
 This dataset has 111 features in total, except the target phishing attribute, which indicates if the instance is legitimate (0) or phishing (1). the dataset has two versions of the 
 dataset, one with 58,645 occurrences with a more or less balanced balance between the target groups, with 30,647 instances categorized as phishing websites and 27,998 
@@ -41,10 +41,11 @@ instances labeled as legitimate. The second dataset has 88,647 cases, with 30,64
 real-world situation in which there are more legitimate websites present. We have used dataset small for further analysis and model building as it has more balanced classes.
  
  ![image](https://user-images.githubusercontent.com/90728105/167975120-764f9474-f59b-4044-ab89-a44287ca6433.png)
+ #### Figure 2: Data set Distribution based on phishing and non-phishing website
  
- ## Models to be used
-### Logistic Regression
+## Models
 
+### Logistic Regression
 Logistic regression is a supervised learning technique. Logistic Regression is used in statistical software to understand the relationship between the dependent variable and one or more independent variables by estimating probabilities using a logistic regression equation. Logistic Regression is used to calculate or predict the probability of a binary event occurring where the outcome can be either yes or no. In our case, in the dataset we are using, we need to predict based on the field values of some websites provided if the that particular website is a phishing website or a malicious one or not. So, the usecase in this case is again binary. Additionally, the training data we're using is independent of each other but at the same time can be linearly related and is of fairly large size. All these factors/ assumptions of the traning data are satisfied for implementing logistic regression.
 
 ### Random Forest Classifier
@@ -72,24 +73,22 @@ In addition to this, the missing values are also imputed using median and mode. 
 
 ## Methods Followed
 Data Preprocessing is referred to as manipulation or dropping of data before it is used to ensure or enhance performance. It is basically the process of transforming the raw data into understandable format. It includes removing irrelevant and redundant information from the data.The product of data preprocessing is the final training set. The dataset that we have selected contained irrelevant and meaningless information which has been removed.
-Firstly, we filtered the data by dropping duplicate rows. We dropped 1653 rows in the dataset. These values were removed to reduce the dimensionality.
+Firstly, we filtered the data by dropping duplicate rows. We dropped 1653 rows in the dataset. These values were removed to reduce the dimensionality.\
 <img width="937" alt="Screen Shot 2022-05-22 at 7 08 17 PM" src="https://user-images.githubusercontent.com/25512807/169730371-8955ff44-6435-44ef-b532-2253e45d9678.png">
-
 #### Figure 3: Removing Duplicate Rows
 
 
 Next, we analyzed that the dataset contained '-1' values throughout where almost all the rows had this value, so we cannot drop all this data. We then checked the percentage of '-1' values in each column.As per the previous analysis, we have noticed that almost 80% of the dataset contains ‘-1’. Since most of the columns have ‘-1’, it would not be wise to remove them altogether as they may significantly affect the result. To tackle this, we remove the columns with less than 80% ‘-1’ and replace them with Nan. To improve the efficiency while testing and training, we drop the rest of the columns.
-We then visualized the missing data in the dataframe using the missing number library. The figure below shows the visualization of missing data after imputing Nan and it can be noted that a lot of params are missing.
+We then visualized the missing data in the dataframe using the missing number library. The figure below shows the visualization of missing data after imputing Nan and it can be noted that a lot of params are missing.\
 
 <img width="534" alt="Screen Shot 2022-05-22 at 7 08 35 PM" src="https://user-images.githubusercontent.com/25512807/169730384-edf5a130-e339-4773-b384-309cc6391737.png">
-
-#### Figure 4 : Visualization of Missing Data
+#### Figure 4: Visualization of Missing Data
 
  
 Once we have dropped values containing ‘-1’, the next step is to look at the missing values. There are three main reasons why values could be missing – Missing at random, Missing Completely at random, Not Missing at random. The initial approach initiated for imputing it using mean imputation. As the name suggests, the mean is calculated for the available values and replaced with the non-missing value’s number. An essential step to bear in mind during mean imputation is to remove outliers to prevent seeing absurd or surprising values as mean.
 In addition to this, the missing values are also imputed using median and mode. These methods do not necessarily worry about outliers as they work using the middle values that are present when the column values are sorted. The last imputation method used is the most effective in predicting the missing values. It uses the Nearest Neighbor method known as KNN imputation, where the Nan values are replaced with the values of the neighboring values.
 
-### A.Mean Imputed Data Analysis:
+### A. Mean Imputed Data Analysis:
 The data is missing at random in our Dataset, and there is no correlation with other variables  in the dataset. So, the strategy here is to use Mean Imputation to impute the Null or NAN values. 
 We used the SimpleImputer class to accomplish this. SimpleImputer is a scikit-learn class for dealing with missing data in a predictive model dataset. 
 The mean of the corresponding column is used to replace all missing data.
@@ -97,9 +96,9 @@ The data is then shown to see if there are any Null values. It is clear from the
 
 <img width="496" alt="Screen Shot 2022-05-22 at 7 11 33 PM" src="https://user-images.githubusercontent.com/25512807/169730453-1bca996c-5484-4598-a4f9-08ecc43157b2.png">
 
-#### Figure 5 : Visualization after Mean Imputing Data
+#### Figure 5: Visualization after Mean Imputing Data
 
-### B.KNN Imputed Data Analysis
+### B. KNN Imputed Data Analysis
 The Nan values or the null data is imputed using KNN imputer with nearest neighbor - 7 and the distance measure used is euclidean distance. 
 The stratified split size of test data to train data is 25%.
 Data is standardized using StandardScalar() function.
@@ -110,9 +109,7 @@ Below is the visualization of  categorical in knn imputed data.
 
 <img width="526" alt="Screen Shot 2022-05-22 at 7 12 17 PM" src="https://user-images.githubusercontent.com/25512807/169730517-cadcbbb5-a07a-416b-880e-27abaa2b5727.png">
 
-#### Figure 6 : Visualization of categorical data in knn imputed data
-
-
+#### Figure 6: Visualization of categorical data in knn imputed data
 
 # Feature Selection and Importance
 
@@ -126,27 +123,26 @@ Below is the visualization of  categorical in knn imputed data.
 
 <img width="296" alt="Screen Shot 2022-05-22 at 7 16 42 PM" src="https://user-images.githubusercontent.com/25512807/169730941-727b1c1e-97c5-48a2-ab20-dbc8bb12e43b.png">
 
-#### Figure 7 : Feature Selection and Importance of Mean Imputed Data
+#### Figure 7: Feature Selection and Importance of Mean Imputed Data
 
 ## Feature Selection and Importance of KNN Imputed Data 
 1. Examining a model's coefficients is the simplest technique to analyze feature importance. It has some influence on the  forecast if the assigned coefficient is a large number. If the coefficient is 0 or that it has no influence on the forecast accuracy. 
 2. XGBoost Classifier has built in feature importance. The more significant the feature, the higher the value of the node probability.
 3. We find the highest correlated columns or features in the dataset which turns out to be 14 as they provide the same information.
 4. Using the XGBClassifier we find the top most important features which determine if the website is a phishing website. The optimal number of features is 34 in our case. 
-5. Figure 8 is the graph for recursive feature elimination using cross validation.
+5. Figure 8 shows the graph for recursive feature elimination using cross validation.\
+
 <img width="301" alt="Screen Shot 2022-05-22 at 7 18 07 PM" src="https://user-images.githubusercontent.com/25512807/169731081-b0bfcacb-189f-4947-9962-a136577404c6.png">
 
-#### Figure 8 : Graph for Recursive Feature Elimination using cross validation
+#### Figure 8: Graph for Recursive Feature Elimination using cross validation
 
 6. Here you can observe that after as the number of features increases initially the accuracy also increases but gets saturated once the number of features reaches the number 30.
 7. We also plot the feature importance graph which displays the features which affect the result in the most impactful way.
 8. Optimal number of features = 42 is obtained using the RFECV method.
 
-
 <img width="301" alt="Screen Shot 2022-05-22 at 7 18 51 PM" src="https://user-images.githubusercontent.com/25512807/169731157-9891c485-bb9e-42e7-93ec-3f5efd4219d7.png">
 
-#### Figure 9 : Feature Selection and Importance of KNN Imputed Data 
-
+#### Figure 9: Feature Selection and Importance of KNN Imputed Data 
 
 ## Modeling Comparisons
 The accuracy is obtained using various models. The first two models were trained on Mean imputed data while the other models were trained on KNN imputed data. The following are the models:
@@ -157,52 +153,48 @@ It is used in statistical software to understand the relationship between the de
 ### KNN Classifier:
 The k-nearest neighbors (KNN) algorithm is a simple, supervised machine learning algorithm that can be used to solve both classification and regression problems. The accuracy found in the KNeighbour classifier is 95.34 percent via Mean imputed data. Below, the figure shows us the accuracy of the KNN Classifier model. \
 ![image](https://user-images.githubusercontent.com/90728105/169725911-df1bcd4c-9789-429c-8d2b-3de7ce23928d.png)
-
-#### Figure 10 : Accuracy of the KNN Classifier model  
+#### Figure 10: Accuracy of the KNN Classifier model  
 
 ### XGBoost Classifier:
 XGBoost is an algorithm that has recently been dominating applied machine learning and Kaggle competitions for structured or tabular data. XGBoost is an implementation of gradient boosted decision trees designed for speed and performance. The accuracy found through XGB CLassifier is 92.77 percent via KNN imputation. The performance metrics of XGBoost Classifier can be seen in the figure below- \
 ![image](https://user-images.githubusercontent.com/90728105/169725626-91195074-df1f-4746-9202-77c6caf3c950.png)
-
-#### Figure 11 : Performance Metrics of the KNN Classifier model 
+#### Figure 11: Performance Metrics of the KNN Classifier model 
 
 ### Logistic Regression:
 It is used in statistical software to understand the relationship between the dependent variable and one or more independent variables by estimating probabilities using a logistic regression equation. The accuracy found through Logistic Regression is 89.07 percent via KNN imputation. Performance metrics of Logistic Regression can be seen in the figure below- \
 ![image](https://user-images.githubusercontent.com/90728105/169725560-b18fe537-561b-4bd7-b9fc-c586ca641c45.png)
-
-#### Figure 12 : Performance Metrics of the Logistic Regression 
+#### Figure 12: Performance Metrics of the Logistic Regression 
 
 ### Random Forest Classifier:
 When a large number of decision tree operate as an ensemble, they make up Random Forest. Each tree in the random forest produces a class prediction, and the class with the most votes becomes the prediction of our model. The accuracy found through Random Forest is 95.63 percent via KNN imputation. The Performance metrics of Random Forest Classifier can be seen in the figure below- \
 ![image](https://user-images.githubusercontent.com/90728105/169725726-2876dff8-3258-489d-b5bb-d6ce9e899b71.png)
-
-#### Figure 13 : Performance Metrics of the Random Forest Classifier 
+#### Figure 13: Performance Metrics of the Random Forest Classifier 
 
 ## Comparisons
 We modeled and analyzed data with 2 imputation methods for which we observed different results. Logistic Regression was applied to both the types of data but it produced an accuracy of 88% on Knn imputed data whereas for mean imputed data it produced a 95% accuracy. Logistic Regression for mean imputed data was clearly overfitting.  Models applied to the 2 types of imputed data provided highest accuracy rates of 94%.
 
 ## Conclusion
-Here, after all the analysis we can conclude that the best accuracy of 94.72% for KNN imputed data was achieved using RandomForestClassifier. The best accuracy for mean imputed data was provided using KNNClassifier which produced an accuracy of 95.34%. 
+Here, after all the analysis we can conclude that the best accuracy of 94.63% for KNN imputed data was achieved using RandomForestClassifier. The best accuracy for mean imputed data was provided using KNNClassifier which produced an accuracy of 95.34%. 
 
 According to feature importance graphs we can conclude the most relevant features correspond to attributes depending on URL and external services, according to both KNN imputed data analysis and mean imputed data analysis.
 
 ## References
 [1] 6.4. imputation of missing values. scikit. (n.d.). Retrieved May 22, 2022, from https://scikit-learn.org/stable/modules/impute.html 
 
-[2] Brownlee, J. (2019, August 22). A gentle introduction to data visualization methods in Python. Machine Learning Mastery. Retrieved May 22, 2022, from               https://machinelearningmastery.com/data-visualization-methods-in-python/ 
+[2] Brownlee, J. (2019, August 22). A gentle introduction to data visualization methods in Python. Machine Learning Mastery. Retrieved May 22, 2022, from                   https://machinelearningmastery.com/data-visualization-methods-in-python/ 
 
-[3] Brownlee, J. (2020, August 20). How to calculate feature importance with python. Machine Learning Mastery. Retrieved May 22, 2022, from                             https://machinelearningmastery.com/calculate-feature-importance-with-python/ 
+[3] Brownlee, J. (2020, August 20). How to calculate feature importance with python. Machine Learning Mastery. Retrieved May 22, 2022, from                                 https://machinelearningmastery.com/calculate-feature-importance-with-python/ 
 
-[4] Explore scientific, technical, and medical research on ScienceDirect. ScienceDirect.com | Science, health and medical journals, full text articles and books.       (n.d.). Retrieved May 22, 2022, from https://www.sciencedirect.com/ 
+[4] Explore scientific, technical, and medical research on ScienceDirect. ScienceDirect.com | Science, health and medical journals, full text articles and books.           (n.d.). Retrieved May 22, 2022, from https://www.sciencedirect.com/ 
 
-[5] Interquartile range and quartile deviation using NumPy and SciPy. GeeksforGeeks. (2020, June 7). Retrieved May 22, 2022, from                                       https://www.geeksforgeeks.org/interquartile-range-and-quartile-deviation-using-numpy-and-scipy/ 
+[5] Interquartile range and quartile deviation using NumPy and SciPy. GeeksforGeeks. (2020, June 7). Retrieved May 22, 2022, from                                           https://www.geeksforgeeks.org/interquartile-range-and-quartile-deviation-using-numpy-and-scipy/ 
 
-[6] Lewinson, E. (2021, August 26). Explaining feature importance by example of a random forest. Medium. Retrieved May 22, 2022, from                                   https://towardsdatascience.com/explaining-feature-importance-by-example-of-a-random-forest-d9166011959e 
+[6] Lewinson, E. (2021, August 26). Explaining feature importance by example of a random forest. Medium. Retrieved May 22, 2022, from                                       https://towardsdatascience.com/explaining-feature-importance-by-example-of-a-random-forest-d9166011959e 
 
-[7] McKenzie, C., Morrow, S., Belding, G., Mallory, P., Messina, G., Tavares, P., &amp; Antipov, A. (2022, March 20). Phishing archives. Infosec Resources.             Retrieved May 22, 2022, from https://resources.infosecinstitute.com/topics/phishing/#gref 
+[7] McKenzie, C., Morrow, S., Belding, G., Mallory, P., Messina, G., Tavares, P., &amp; Antipov, A. (2022, March 20). Phishing archives. Infosec Resources.                 Retrieved May 22, 2022, from https://resources.infosecinstitute.com/topics/phishing/#gref 
 
 [8] Phishing detection using machine learning techniques - arxiv.org. (n.d.). Retrieved May 23, 2022, from https://arxiv.org/pdf/2009.11116.pdf 
 
 [9] Vrbančič, G. (2020, September 24). Phishing websites dataset. Mendeley Data. Retrieved May 22, 2022, from https://data.mendeley.com/datasets/72ptz43s9v/1 
 
-[10] ResidentMario. (n.d.). Residentmario/Missingno: Missing data visualization module for python. GitHub. Retrieved May 22, 2022, from https://github.com/ResidentMario/missingno 
+[10] ResidentMario. (n.d.). Residentmario/Missingno: Missing data visualization module for python. GitHub. Retrieved May 22, 2022, from                                      https://github.com/ResidentMario/missingno 
