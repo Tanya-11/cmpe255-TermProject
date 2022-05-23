@@ -164,4 +164,6 @@ It is used in statistical software to understand the relationship between the de
 When a large number of decision tree operate as an ensemble, they make up Random Forest. Each tree in the random forest produces a class prediction, and the class with the most votes becomes the prediction of our model. The accuracy found through Random Forest is 95.63 percent via KNN imputation. The Performance metrics of Random Forest Classifier can be seen in the figure below- \
 ![image](https://user-images.githubusercontent.com/90728105/169725726-2876dff8-3258-489d-b5bb-d6ce9e899b71.png)
 
+## Comparisons
+We modeled and analyzed data with 2 imputation methods for which we observed different results. Logistic Regression was applied to both the types of data but it produced an accuracy of 88% on Knn imputed data whereas for mean imputed data it produced a 95% accuracy. Logistic Regression for mean imputed data was clearly overfitting.  Models applied to the 2 types of imputed data provided highest accuracy rates of 94%.
 
