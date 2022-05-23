@@ -19,7 +19,7 @@ from consumers.
 pip install -r requirements.txt
 ```
 #### Open Jupyter Notebook - 255Final.ipynb
-#### Please import ```dataset_small.csv``` unser root durectory of this project.
+#### Please import ```dataset_small.csv``` under root directory of this project.
 #### Finally, run the code in Google Colab or jupyter notebook
 
 
