@@ -75,11 +75,15 @@ Data Preprocessing is referred to as manipulation or dropping of data before it 
 Firstly, we filtered the data by dropping duplicate rows. We dropped 1653 rows in the dataset. These values were removed to reduce the dimensionality.
 <img width="937" alt="Screen Shot 2022-05-22 at 7 08 17 PM" src="https://user-images.githubusercontent.com/25512807/169730371-8955ff44-6435-44ef-b532-2253e45d9678.png">
 
+#### Figure 3: Removing Duplicate Rows
+
 
 Next, we analyzed that the dataset contained '-1' values throughout where almost all the rows had this value, so we cannot drop all this data. We then checked the percentage of '-1' values in each column.As per the previous analysis, we have noticed that almost 80% of the dataset contains ‘-1’. Since most of the columns have ‘-1’, it would not be wise to remove them altogether as they may significantly affect the result. To tackle this, we remove the columns with less than 80% ‘-1’ and replace them with Nan. To improve the efficiency while testing and training, we drop the rest of the columns.
 We then visualized the missing data in the dataframe using the missing number library. The figure below shows the visualization of missing data after imputing Nan and it can be noted that a lot of params are missing.
 
 <img width="534" alt="Screen Shot 2022-05-22 at 7 08 35 PM" src="https://user-images.githubusercontent.com/25512807/169730384-edf5a130-e339-4773-b384-309cc6391737.png">
+
+#### Figure 4 : Visualization of Missing Data
 
  
 Once we have dropped values containing ‘-1’, the next step is to look at the missing values. There are three main reasons why values could be missing – Missing at random, Missing Completely at random, Not Missing at random. The initial approach initiated for imputing it using mean imputation. As the name suggests, the mean is calculated for the available values and replaced with the non-missing value’s number. An essential step to bear in mind during mean imputation is to remove outliers to prevent seeing absurd or surprising values as mean.
@@ -104,6 +108,8 @@ Below is the visualization of  categorical in knn imputed data.
 
 
 <img width="526" alt="Screen Shot 2022-05-22 at 7 12 17 PM" src="https://user-images.githubusercontent.com/25512807/169730517-cadcbbb5-a07a-416b-880e-27abaa2b5727.png">
+
+#### Figure 5 : Visualization of categorical data in knn imputed data
 
 
 ## Modeling Comparisons
