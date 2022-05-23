@@ -112,6 +112,36 @@ Below is the visualization of  categorical in knn imputed data.
 #### Figure 5 : Visualization of categorical data in knn imputed data
 
 
+
+# Feature Selection and Importance
+
+## Feature Selection and Importance of Mean Imputed Data
+1. Methods for computing a score for each model's input characteristic are referred to as "feature importance." The scores describe the "importance" of each feature. 
+2. A higher score suggests that the feature will impact the model used to anticipate a particular variable more.
+3. Initially, we Split the Mean Imputed data into 70 % for Training and 30% for Testing the Model.
+4. The model we used here is  XGBoost Classifier, a trained XGBoost model that calculates feature importance automatically.
+5. The importance scores for each feature are then stored in the trained model's feature importances_ member variable.
+6. We select the first 15 important features because the Importance of the following features is almost constant, which is seen below in the Plot. 
+
+<img width="296" alt="Screen Shot 2022-05-22 at 7 16 42 PM" src="https://user-images.githubusercontent.com/25512807/169730941-727b1c1e-97c5-48a2-ab20-dbc8bb12e43b.png">
+
+
+## Feature Selection and Importance of KNN Imputed Data 
+1. Examining a model's coefficients is the simplest technique to analyze feature importance. It has some influence on the  forecast if the assigned coefficient is a large number. If the coefficient is 0 or that it has no influence on the forecast accuracy. 
+2. XGBoost Classifier has built in feature importance. The more significant the feature, the higher the value of the node probability.
+3. We find the highest correlated columns or features in the dataset which turns out to be 14 as they provide the same information.
+4. Using the XGBClassifier we find the top most important features which determine if the website is a phishing website. The optimal number of features is 34 in our case. 
+5. Below is the graph for recursive feature elimination using cross validation.
+<img width="301" alt="Screen Shot 2022-05-22 at 7 18 07 PM" src="https://user-images.githubusercontent.com/25512807/169731081-b0bfcacb-189f-4947-9962-a136577404c6.png">
+
+6. Here you can observe that after as the number of features increases initially the accuracy also increases but gets saturated once the number of features reaches the number 30.
+7. We also plot the feature importance graph which displays the features which affect the result in the most impactful way.
+8. Optimal number of features = 42 is obtained using the RFECV method.
+
+
+<img width="301" alt="Screen Shot 2022-05-22 at 7 18 51 PM" src="https://user-images.githubusercontent.com/25512807/169731157-9891c485-bb9e-42e7-93ec-3f5efd4219d7.png">
+
+
 ## Modeling Comparisons
 The accuracy is obtained using various models. The first two models were trained on Mean imputed data while the other models were trained on KNN imputed data. The following are the models:\
 
