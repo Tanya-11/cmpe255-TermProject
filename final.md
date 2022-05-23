@@ -53,36 +53,6 @@ Once we have dropped values containing ‘-1’, the next step is to look at the
 
 In addition to this, the missing values are also imputed using median and mode. These methods do not necessarily worry about outliers as they work using the middle values that are present when the column values are sorted. The last imputation method used is the most effective in predicting the missing values. It uses the Nearest Neighbor method known as KNN imputation, where the Nan values are replaced with the values of the neighboring values.
 
-### Plotting count of values per column before dropping duplicate values :
-![image](https://user-images.githubusercontent.com/25512807/168695237-a0fd311a-93f7-4101-9108-67ee5b36ac98.png)
-
-
-### Visualization of Missing Data using missingno lib.
-![image](https://user-images.githubusercontent.com/25512807/168695331-054c4d98-5055-4205-a5d5-09eb48ed0b04.png)
-
-
-### Firstly, we filtered the data by dropping duplicate rows. These values were removed to reduce the dimensionality.
-![image](https://user-images.githubusercontent.com/25512807/168695377-3d86bdaf-9ae0-450f-9e80-f95081d1fc46.png)
-
-Next, we analysed that the dataset contained '-1' values throughout where almost all the rows had this value, so we cannot drop all this data. We then checked the percentage of '-1' values in each column.
-
-
-Visualization-
-- Based on co-relation between attributes - we can see few attributes where the value is 1 in heatmap, strongly affect each other. For eg. qty_dot_directory and  qty_hyper_directory are strongly related.
-![image](https://user-images.githubusercontent.com/90728105/167982711-845f3513-2fe7-41f8-ba22-df98429f959d.png)
-
-- Before imputation-
- 1. Based on nullity in attributes - we can see the attributes like time_domain_expiration, time_domain_activation has maximum amount of missing values and hence, there bar length in green color is shortest in comparison to the length of other attributes.
-![image](https://user-images.githubusercontent.com/90728105/167983099-0a990332-8f99-41a7-af1a-eb28c0a19aa4.png)
-
-After Imputation-
-- Below we can see after applying each type of imputation we have imputed/substituted the missing value with mean, median and mode. Therefore, all the green bars in the plots are of equal length and are of equal length.
-1. Median Imputed\
-![image](https://user-images.githubusercontent.com/90728105/167984027-e25f0024-5fb0-4b2d-ba2b-99e61c2519c1.png)
-2. Mean Imputed\
-![image](https://user-images.githubusercontent.com/90728105/167984332-7a69a27a-1833-4b2e-8309-470d056bdff6.png)
-3. Mode Imputed\
-![image](https://user-images.githubusercontent.com/90728105/167984112-0e5a96d8-b675-4794-acba-1750056146a2.png)
 
 ## Models to be used
 ### Logistic Regression
@@ -100,3 +70,26 @@ It is a decision tree-based machine learning algorithm that improves performance
 XGBoost is a scalable and highly accurate version of gradient boosting that pushes the limits of computing power for boosted tree algorithms. It was designed primarily to increase machine learning model performance and computational speed. With XGBoost, trees are built in parallel, instead of sequentially like GBDT. It follows a level-wise strategy, scanning across gradient values and using these partial sums to evaluate the quality of splits at every possible split in the training set.
 
 In our case, For predicting the maliciousness of websites, To get the best optimal results, we tune the XGB using a random search for fitting 3 folds for each of the 100 candidates totaling 300 fits. The optimal parameters obtained are subsample: 0.1, estimators: 500, min child weight: 1, max depth: 5, eta: 0.05, colsample bytree: 0.1. Using these parameters in the XGBClassifier gives us the feature importance of the data frame.
+
+## Modeling Comparisons
+The accuracy is obtained using various models. The first two models were trained on Mean imputed data while the other models were trained on KNN imputed data. The following are the models:\
+
+### Logistic Regression:
+It is used in statistical software to understand the relationship between the dependent variable and one or more independent variables by estimating probabilities using a logistic regression equation. The accuracy found through Logistic Regression is 99.99 percent via Mean imputed data. Hence, it can be understood that this model is overfitting.\
+
+### KNN Classifier:
+The k-nearest neighbors (KNN) algorithm is a simple, supervised machine learning algorithm that can be used to solve both classification and regression problems. The accuracy found in the KNeighbour classifier is 95.34 percent via Mean imputed data. Below, the figure shows us the accuracy of the KNN Classifier model. \
+![image](https://user-images.githubusercontent.com/90728105/169725911-df1bcd4c-9789-429c-8d2b-3de7ce23928d.png)
+
+### XGBoost Classifier:
+XGBoost is an algorithm that has recently been dominating applied machine learning and Kaggle competitions for structured or tabular data. XGBoost is an implementation of gradient boosted decision trees designed for speed and performance. The accuracy found through XGB CLassifier is 92.77 percent via KNN imputation. The performance metrics of XGBoost Classifier can be seen in the figure below- \
+![image](https://user-images.githubusercontent.com/90728105/169725626-91195074-df1f-4746-9202-77c6caf3c950.png)
+
+### Logistic Regression:
+It is used in statistical software to understand the relationship between the dependent variable and one or more independent variables by estimating probabilities using a logistic regression equation. The accuracy found through Logistic Regression is 89.07 percent via KNN imputation. Performance metrics of Logistic Regression can be seen in the figure below- \
+![image](https://user-images.githubusercontent.com/90728105/169725560-b18fe537-561b-4bd7-b9fc-c586ca641c45.png)
+
+### Random Forest Classifier:
+When a large number of decision tree operate as an ensemble, they make up Random Forest. Each tree in the random forest produces a class prediction, and the class with the most votes becomes the prediction of our model. The accuracy found through Random Forest is 95.63 percent via KNN imputation. The Performance metrics of Random Forest Classifier can be seen in the figure below- \
+![image](https://user-images.githubusercontent.com/90728105/169725726-2876dff8-3258-489d-b5bb-d6ce9e899b71.png)
+
