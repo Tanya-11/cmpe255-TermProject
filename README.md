@@ -13,14 +13,14 @@ Our project's purpose is to discover the most accurate data mining algorithm in 
 from consumers.
 
 ## How to run?
-# Install dependencies
+#### Install dependencies
 
 ```
 pip install -r requirements.txt
 ```
-# Open Jupyter Notebook - 255Final.ipynb
-# Please import ```dataset_small.csv``` unser root durectory of this project.
-# Finally, run the code in Google Colab or jupyter notebook
+#### Open Jupyter Notebook - 255Final.ipynb
+#### Please import ```dataset_small.csv``` unser root durectory of this project.
+#### Finally, run the code in Google Colab or jupyter notebook
 
 
 
